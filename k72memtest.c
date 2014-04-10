@@ -64,18 +64,66 @@ static void ResetHandler(void)
 	if (!check_lfsr_pattern(1438200953ul)) goto fail;
 	if (!check_lfsr_pattern(3413783263ul)) goto fail;
 	if (!check_lfsr_pattern(1900517911ul)) goto fail;
+	if (!check_lfsr_pattern(1227909400ul)) goto fail;
+	if (!check_lfsr_pattern(276562754ul)) goto fail;
+	if (!check_lfsr_pattern(146878114ul)) goto fail;
+	if (!check_lfsr_pattern(615545407ul)) goto fail;
+	if (!check_lfsr_pattern(110497896ul)) goto fail;
+	if (!check_lfsr_pattern(74539250ul)) goto fail;
+	if (!check_lfsr_pattern(4197336575ul)) goto fail;
+	if (!check_lfsr_pattern(2280382233ul)) goto fail;
+	if (!check_lfsr_pattern(542894183ul)) goto fail;
+	if (!check_lfsr_pattern(3978544245ul)) goto fail;
+	if (!check_lfsr_pattern(2315909796ul)) goto fail;
+	if (!check_lfsr_pattern(3736286001ul)) goto fail;
+	if (!check_lfsr_pattern(2876690683ul)) goto fail;
+	if (!check_lfsr_pattern(215559886ul)) goto fail;
+	if (!check_lfsr_pattern(539179291ul)) goto fail;
+	if (!check_lfsr_pattern(537678650ul)) goto fail;
+	if (!check_lfsr_pattern(4001405270ul)) goto fail;
+	if (!check_lfsr_pattern(2169216599ul)) goto fail;
+	if (!check_lfsr_pattern(4036891097ul)) goto fail;
+	if (!check_lfsr_pattern(1535452389ul)) goto fail;
+	if (!check_lfsr_pattern(2959727213ul)) goto fail;
+	if (!check_lfsr_pattern(4219363395ul)) goto fail;
+	if (!check_lfsr_pattern(1036929753ul)) goto fail;
+	if (!check_lfsr_pattern(2125248865ul)) goto fail;
+	if (!check_lfsr_pattern(3177905864ul)) goto fail;
+	if (!check_lfsr_pattern(2399307098ul)) goto fail;
+	if (!check_lfsr_pattern(3847634607ul)) goto fail;
+	if (!check_lfsr_pattern(27467969ul)) goto fail;
+	if (!check_lfsr_pattern(520563506ul)) goto fail;
+	if (!check_lfsr_pattern(381313790ul)) goto fail;
+	if (!check_lfsr_pattern(4174769276ul)) goto fail;
+	if (!check_lfsr_pattern(3932189449ul)) goto fail;
+	if (!check_lfsr_pattern(4079717394ul)) goto fail;
+	if (!check_lfsr_pattern(868357076ul)) goto fail;
+	if (!check_lfsr_pattern(2474062993ul)) goto fail;
+	if (!check_lfsr_pattern(1502682190ul)) goto fail;
+	if (!check_lfsr_pattern(2471230478ul)) goto fail;
+	if (!check_lfsr_pattern(85016565ul)) goto fail;
+	if (!check_lfsr_pattern(1427530695ul)) goto fail;
+	if (!check_lfsr_pattern(1100533073ul)) goto fail;
 
 	// all tests passed :-)
 	// LED on solid
 	CORE_PIN13_PORTSET = CORE_PIN13_BITMASK; // turn LED on
-	while (1) ;
+	while (1) {
+		/*  uncomment for a slow blink on pass
+		int n;
+		CORE_PIN13_PORTSET = CORE_PIN13_BITMASK; // turn LED on
+		for (n=0; n < 22000000; n++) asm("nop");
+		CORE_PIN13_PORTCLEAR = CORE_PIN13_BITMASK; // turn LED off
+		for (n=0; n < 22000000; n++) asm("nop");
+		*/
+	}
 
 fail:	// some test failed :-(
 	// LED blinks rapidly
 	while (1) {
 		int n;
 		CORE_PIN13_PORTSET = CORE_PIN13_BITMASK; // turn LED on
-		for (n=0; n < 700000; n++) asm("nop");
+		for (n=0; n < 500000; n++) asm("nop");
 		CORE_PIN13_PORTCLEAR = CORE_PIN13_BITMASK; // turn LED off
 		for (n=0; n < 700000; n++) asm("nop");
 	}
