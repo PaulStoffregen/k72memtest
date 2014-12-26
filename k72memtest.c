@@ -38,12 +38,28 @@
 static inline int check_fixed_pattern(uint32_t pattern) __attribute__((always_inline));
 static inline int check_lfsr_pattern(uint32_t seed) __attribute__((always_inline));
 
+__attribute__ ((noreturn, naked))
 static void ResetHandler(void)
 {
 	WDOG_UNLOCK = WDOG_UNLOCK_SEQ1;
 	WDOG_UNLOCK = WDOG_UNLOCK_SEQ2;
 	WDOG_STCTRLH = WDOG_STCTRLH_ALLOWUPDATE;
+	MCG_C3 = 0x80;
+
+	//SIM_CLKDIV1 = SIM_CLKDIV1_OUTDIV1(0) | SIM_CLKDIV1_OUTDIV2(1) | SIM_CLKDIV1_OUTDIV4(3);
+	//MCG_C4 = 0b11100000; // run at approx 96 MHz, using FLL
+	//MCG_C4 = 0b01100000; // run at approx 84 MHz, using FLL
+
+	SIM_CLKDIV1 = SIM_CLKDIV1_OUTDIV1(0) | SIM_CLKDIV1_OUTDIV2(1) | SIM_CLKDIV1_OUTDIV4(2);
 	MCG_C4 = 0b11000000; // run at approx 72 MHz, using FLL
+	//MCG_C4 = 0b01000000; // run at approx 63 MHz, using FLL
+
+	//SIM_CLKDIV1 = SIM_CLKDIV1_OUTDIV1(0) | SIM_CLKDIV1_OUTDIV2(0) | SIM_CLKDIV1_OUTDIV4(1);
+	//MCG_C4 = 0b10100000; // run at approx 48 MHz, using FLL
+
+	//SIM_CLKDIV1 = SIM_CLKDIV1_OUTDIV1(0) | SIM_CLKDIV1_OUTDIV2(0) | SIM_CLKDIV1_OUTDIV4(0);
+	//MCG_C4 = 0b10000000; // run at approx 24 MHz, using FLL
+
 	SIM_SCGC5 = 0x00043F82; // clocks active to all GPIO
 	CORE_PIN13_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
 	CORE_PIN13_DDRREG = CORE_PIN13_BITMASK;
@@ -104,7 +120,6 @@ static void ResetHandler(void)
 	if (!check_lfsr_pattern(85016565ul)) goto fail;
 	if (!check_lfsr_pattern(1427530695ul)) goto fail;
 	if (!check_lfsr_pattern(1100533073ul)) goto fail;
-
 	// all tests passed :-)
 	// LED on solid
 	CORE_PIN13_PORTSET = CORE_PIN13_BITMASK; // turn LED on

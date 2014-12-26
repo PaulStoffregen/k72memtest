@@ -7,7 +7,14 @@
 #define WDOG_STCTRLH_ALLOWUPDATE        (uint16_t)0x0010
 
 #define SIM_SCGC5               *(volatile uint32_t *)0x40048038 // System Clock Gating Control Register 5
+#define SIM_CLKDIV1             (*(volatile uint32_t *)0x40048044) // System Clock Divider Register 1
+#define SIM_CLKDIV1_OUTDIV1(n)          ((uint32_t)(((n) & 0x0F) << 28)) // divide value for the core/system clock
+#define SIM_CLKDIV1_OUTDIV2(n)          ((uint32_t)(((n) & 0x0F) << 24)) // divide value for the peripheral clock
+#define SIM_CLKDIV1_OUTDIV4(n)          ((uint32_t)(((n) & 0x0F) << 16)) // divide value for the flash clock
 
+
+
+#define MCG_C3                  *(volatile uint8_t  *)0x40064002 // MCG Control 3 Register
 #define MCG_C4                  *(volatile uint8_t  *)0x40064003 // MCG Control 4 Register
 
 #define GPIOA_PDOR              *(volatile uint32_t *)0x400FF000 // Port Data Output Register
