@@ -25,8 +25,13 @@
 
 #include "minidefs.h"
 
+#if defined(TEENSY36)
+#define RAM_BEGIN (uint32_t *)0x1FFF0000
+#define RAM_END   (uint32_t *)0x2002FFFF
+#elif defined(TEENSY31)
 #define RAM_BEGIN (uint32_t *)0x1FFF8000
 #define RAM_END   (uint32_t *)0x20007FFF
+#endif
 
 #define CORE_PIN13_BIT          5
 #define CORE_PIN13_BITMASK      (1<<(CORE_PIN13_BIT))
